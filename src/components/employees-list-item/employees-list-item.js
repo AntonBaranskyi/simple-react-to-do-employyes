@@ -1,10 +1,17 @@
 import './employees-list-item.css';
+import {Component} from 'react';
 
-const EmployeesListItem = () => {
+class EmployeesListItem extends Component {
+    constructor(props){
+        super(props);
+    }
+
+    render(){
+        const {name,salary} = this.props;
     return (
         <li className="list-group-item d-flex justify-content-between">
-            <span className="list-group-item-label">John Smith</span>
-            <input type="text" className="list-group-item-input" defaultValue="1000$"/>
+            <span className="list-group-item-label">{name}</span>
+            <input type="text" className="list-group-item-input" defaultValue={salary + '$'}/>
             <div className='d-flex justify-content-center align-items-center'>
                 <button type="button"
                     className="btn-cookie btn-sm ">
@@ -19,6 +26,7 @@ const EmployeesListItem = () => {
             </div>
         </li>
     )
+        }
 }
 
 export default EmployeesListItem;
