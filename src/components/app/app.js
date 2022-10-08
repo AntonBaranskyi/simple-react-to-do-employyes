@@ -1,3 +1,4 @@
+import { Component } from 'react';
 import AppInfo from '../app-info/app-info';
 import SearchPanel from '../search-panel/search-panel';
 import AppFilter from '../app-filter/app-filter';
@@ -6,13 +7,36 @@ import EmployeesAddForm from '../employees-add-form/employees-add-form';
 
 import './app.css';
 
-const data = [
-  {name:'Anton Baranskyi', salary:700, id: 1},
-  {name:'Kalaur Marina', salary:800, id: 2},
-  {name:'Tyler Joseph', salary:5000, id: 3}
-]
 
-function App() {
+
+class App extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+       data : [
+        {name:'Anton Baranskyi', salary:700, id: 1,increase:false},
+        {name:'Kalaur Marina', salary:800, id: 2,increase:false},
+        {name:'Tyler Joseph', salary:5000, id: 3,increase:false}
+      ]
+    }
+  }
+
+  deleteItem = (id)=>{
+    this.setState(({data})=>{
+      const index = data.findIndex(elem=>elem.id === id) // знайшли індекс елементу на який клікнули
+      //не можна змінювати state напряму
+
+      const before = data.slice(0,index);
+      const after = data.slice(index+1);
+      const newArr = [...before, ...after];
+
+      return{
+        data:newArr
+      }
+    })
+  }
+  render(){
+    
   return (
     <div className="app">
         <AppInfo />
@@ -22,10 +46,13 @@ function App() {
             <AppFilter/>
         </div>
         
-        <EmployeesList data={data}/>
+        <EmployeesList data={this.state.data}
+        onDelete={this.deleteItem}/>
         <EmployeesAddForm/>
     </div>
   );
+  }
 }
 
 export default App;
+
