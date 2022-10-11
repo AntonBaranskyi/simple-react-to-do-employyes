@@ -16,9 +16,10 @@ class App extends Component {
        data : [
         {name:'Anton Baranskyi', salary:700, id: 1,increase:false,raise:true},
         {name:'Kalaur Marina', salary:800, id: 2,increase:true,raise:false},
-        {name:'Tyler Joseph', salary:5000, id: 3,increase:false,rraise:false}
+        {name:'Tyler Joseph', salary:5000, id: 3,increase:false,raise:false}
       ],
-      term:''
+      term:'',
+      filter:'all'
     }
     this.maxId = 4;
   }
@@ -74,18 +75,14 @@ class App extends Component {
    })
   }
   toggleRaiseItem = (id)=>{
-    this.setState(({data})=>{
-      const index = data.findIndex(item=>item.id === id);
-
-     const old =data[index];
-     const newItem = {...old, raise: !old.raise};
-     const newArr = [...data.slice(0,index),newItem, ...data.slice(index+1)];
-
-     return{
-      data:newArr
-     }
-
-   })
+      this.setState(({data})=>({ // установлюємо стан та повертаємо об'єкт
+       data:data.map(item=>{ // перебираємо data 
+        if(item.id === id){ // порівнюємо айді івенту та айді елементу перебору
+          return {...item,raise:!item.raise} // повертаємо об'єкт, замінюючи потрібний key
+        }
+        return item; 
+       })
+      }))
   }
   searchEmp = (items,term)=>{
     if(term.length == 0){
@@ -97,9 +94,23 @@ class App extends Component {
   updateSearch = (term)=>{
     this.setState({term})
   }
+
+  filterData = (items,filter)=>{
+    switch(filter){
+      case 'rise':
+        return items.filter(item=>item.raise)
+      case 'moreThan':
+        return items.filter(item=>item.salary>=1000);
+      default:
+        return items
+    }
+  }
+  onFilterBtn = (filter)=>{
+    this.setState({filter});
+  }
   render(){
-    const {data,term} = this.state;
-    const visibleData = this.searchEmp(data,term);
+    const {data,term,filter} = this.state;
+    const visibleData = this.filterData(this.searchEmp(data,term),filter);
     const numberOfEmloyyes = this.state.data.length;
     const increaseNum = this.state.data.filter(item=>item.increase).length;
   return (
@@ -109,7 +120,7 @@ class App extends Component {
 
         <div className="search-panel">
             <SearchPanel updateSearch ={this.updateSearch}/>
-            <AppFilter/>
+            <AppFilter data ={visibleData} filter = {filter} onFilterBtn = {this.onFilterBtn}/>
         </div>
         
         <EmployeesList data={visibleData}
