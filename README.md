@@ -4,7 +4,6 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ### Was deploy to [Heroku](https://www.heroku.com/).
 
-### See site [here](react-to-do-employees.herokuapp.com/).
 
 ## Available Scripts
 
