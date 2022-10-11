@@ -10,12 +10,12 @@ const AppFilter =(props)=>{
 
     ];
     const buttons = buttonsData.map(({name,label})=>{
-        const active = props.filter === name;
+        const active = props.filter === name; // якщо стейт з app = name з переблру => true
         const clazz = active?' btn-light':' btn-outline-light';
         return (
             <button
-            onClick={()=>props.onFilterBtn(name)}
-            key = {name}
+            onClick={()=>props.onFilterBtn(name)} // передаю змінну у стейт
+            key = {name} 
             type="button"
                     className={`btn ${clazz}`}>
                    {label}
