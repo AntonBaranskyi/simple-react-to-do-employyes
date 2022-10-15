@@ -35,7 +35,7 @@ class App extends Component {
     this.setState(({data})=>{
       const newArr = [...data,newElement];
 
-      if(name == '' || salary == ''){
+      if(name == '' || salary == '' || salary <0){
         return data;
       }
 
