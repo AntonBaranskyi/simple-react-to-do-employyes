@@ -35,7 +35,7 @@ class App extends Component {
     this.setState(({data})=>{
       const newArr = [...data,newElement];
 
-      if(name == '' || salary == '' || salary <0){
+      if(name === '' || salary === '' || salary <0){
         return data;
       }
 
@@ -85,7 +85,7 @@ class App extends Component {
       }))
   }
   searchEmp = (items,term)=>{
-    if(term.length == 0){
+    if(term.length === 0){
       return items;
     }
 
